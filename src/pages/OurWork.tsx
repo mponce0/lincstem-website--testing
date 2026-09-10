@@ -1,6 +1,7 @@
 import { siteContent } from "@/data/content";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import { motion } from "framer-motion";
-
+import { cn } from "@/lib/utils";
 const stageAccents = [
   "border-l-primary/35",
   "border-l-primary/50",
@@ -8,37 +9,52 @@ const stageAccents = [
   "border-l-primary/80",
 ];
 
+const diagramRowStart = [
+  "lg:row-start-1",
+  "lg:row-start-2",
+  "lg:row-start-3",
+  "lg:row-start-4",
+] as const;
+
 export default function OurWork() {
-  const { coDesignTitle, coDesignImage, whatSetsUsApart } = siteContent;
+  const {
+    coDesignTitle,
+    coDesignImage,
+    whatSetsUsApart,
+    testimonialsTitle,
+    testimonials,
+    sponsorsHostFacilitiesTitle,
+    sponsorFacilities,
+  } = siteContent;
 
   return (
     <>
-      <section className="page-hero py-16">
+      <section className="page-header py-5">
         <div className="container text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display text-3xl md:text-5xl font-bold mb-3"
+            className="font-display text-xl md:text-3xl font-bold mb-2"
           >
             Our Work
           </motion.h1>
-          <p className="opacity-80 max-w-2xl mx-auto">{coDesignTitle}</p>
+          <p className="opacity-100 max-w-2xl mx-auto">{coDesignTitle}</p>
         </div>
       </section>
 
-      <section className="py-20 section-surface">
+      <section className="py-20 bg-white">
         <div className="container max-w-6xl">
-          <div className="mb-10">
+          <div className="mb-10 text-center">
             <h2 className="font-display text-3xl font-bold">What Sets Us Apart</h2>
           </div>
 
-          <div className="grid gap-12 lg:grid-cols-[minmax(220px,340px)_1fr] lg:gap-10 xl:gap-16 items-start">
+          <div className="grid gap-10 lg:grid-cols-[minmax(300px,480px)_1fr] lg:grid-rows-4 lg:gap-x-12 xl:gap-x-16 lg:items-center">
             {coDesignImage && (
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="mx-auto lg:mx-0 lg:sticky lg:top-24 w-full max-w-[340px]"
+                className="mx-auto w-full max-w-[420px] sm:max-w-[480px] lg:col-start-1 lg:row-start-1 lg:row-span-4 lg:self-center lg:sticky lg:top-24"
               >
                 <img
                   src={coDesignImage}
@@ -48,16 +64,20 @@ export default function OurWork() {
               </motion.div>
             )}
 
-            <div className="space-y-8">
-              {whatSetsUsApart.map((item, i) => (
-                <motion.article
-                  key={item.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className={`border-l-4 ${stageAccents[i]} pl-5 py-1`}
-                >
+            {whatSetsUsApart.map((item, i) => (
+              <motion.article
+                key={item.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className={cn(
+                  "border-l-4 pl-5 py-1",
+                  stageAccents[i],
+                  "lg:col-start-2",
+                  diagramRowStart[i],
+                )}
+              >
                   <p className="text-xs uppercase tracking-widest text-primary font-medium mb-1">
                     {item.diagramLabel}
                   </p>
@@ -65,7 +85,61 @@ export default function OurWork() {
                   <p className="text-muted-foreground leading-relaxed">{item.description}</p>
                 </motion.article>
               ))}
-            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-10 section-pale border-t border-border/60">
+        <div className="container max-w-6xl">
+          <h2 className="font-display text-3xl font-bold mb-10 text-center">{testimonialsTitle}</h2>
+
+          <TestimonialsCarousel testimonials={testimonials} />
+        </div>
+      </section>
+
+      <section className="py-6 bg-white border-t border-border/60">
+        <div className="container max-w-6xl">
+          <h2 className="font-display text-3xl font-bold mb-5 text-center">{sponsorsHostFacilitiesTitle}</h2>
+
+          <div className="grid gap-10 md:grid-cols-2">
+            {sponsorFacilities.map((facility, i) => (
+              <motion.article
+                key={facility.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="rounded-xl border border-border/60 bg-card p-6 sm:p-2 shadow-sm"
+              >
+                <div className="mb-1 flex min-h-[1rem] items-center justify-center rounded-lg bg-white px-4 py-2">
+                  <img
+                    src={facility.logo}
+                    alt={facility.logoAlt}
+                    className="max-h-16 w-full max-w-[280px] object-contain"
+                  />
+                </div>
+
+		<h3 className="font-display text-xl text-center font-bold mb-4">{facility.name}</h3>
+
+                {facility.supportingText && (
+                  <p className="text-muted-foreground text-sm text-center leading-relaxed mb-4">{facility.supportingText}</p>
+                )}
+
+                {facility.disclaimer && (
+                  <p className="text-[11px] italic text-muted-foreground leading-relaxed border-l-2 border-primary/30 pl-4">
+                    {facility.disclaimer}
+                  </p>
+                )}
+
+                {facility.facilities && (
+                  <div className="space-y-1 text-sm text-muted-foreground text-center leading-relaxed">
+                    {facility.facilities.map((line) => (
+                      <p key={line}>{line}</p>
+                    ))}
+                  </div>
+                )}
+              </motion.article>
+            ))}
           </div>
         </div>
       </section>

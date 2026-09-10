@@ -7,7 +7,7 @@
 @layer base {
   :root {
     --background: 0 28% 97%;
-    --foreground: 0 15% 18%;
+    --foreground: 0 0% 22%;
     --card: 0 22% 99%;
     --card-foreground: 0 15% 18%;
     --popover: 0 22% 99%;
@@ -25,9 +25,15 @@
     --border: 0 16% 87%;
     --input: 0 16% 87%;
     --ring: 0 38% 42%;
-    --hero-from: 0 46% 41%;
-    --hero-via: 0 43% 38%;
-    --hero-to: 0 40% 34%;
+    /* Bright Apple Red Gradient for Hero section */
+    --hero-from: 0 100% 50%;   /* Bright Apple Red */
+    --hero-via: 0 90% 42%;    /* Vibrant Mid Red */
+    --hero-to: 0 85% 35%;     /* Deep Crimson Finish */
+    /* original
+     --hero-from: 0 46% 41%;
+     --hero-via: 0 43% 38%;
+     --hero-to: 0 40% 34%;
+    */
     --radius: 0.5rem;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -41,7 +47,7 @@
 
   .dark {
     --background: 0 0% 6%;
-    --foreground: 0 0% 95%;
+    --foreground: 0 0% 12%;
     --card: 0 0% 10%;
     --card-foreground: 0 0% 95%;
     --popover: 0 0% 10%;
@@ -94,8 +100,12 @@
     background: linear-gradient(
       135deg,
       hsl(var(--hero-from)) 0%,
-      hsl(var(--hero-via)) 50%,
+      hsl(var(--hero-via)) 0%,
       hsl(var(--hero-to)) 100%
     );
+  }
+  .page-header {
+    color: hsl(var(--primary-foreground));
+    background: hsl(var(--foreground));
   }
 }

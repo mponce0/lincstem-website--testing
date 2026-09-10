@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import PhotoGallery from "@/components/PhotoGallery";
 
 export default function GradePage() {
   const { gradeId } = useParams();
@@ -36,7 +37,7 @@ export default function GradePage() {
   return (
     <>
       {/* Header */}
-      <section className="page-hero py-16">
+      <section className="page-header py-5">
         <div className="container">
           <Link to="/materials" className="inline-flex items-center text-sm opacity-70 hover:opacity-100 mb-4 transition-opacity">
             <ArrowLeft className="mr-1 h-4 w-4" /> Our Materials
@@ -44,7 +45,7 @@ export default function GradePage() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display text-3xl md:text-5xl font-bold mb-3"
+            className="font-display text-3xl md:text-xl font-bold mb-3"
           >
             {grade.title}
           </motion.h1>
@@ -52,7 +53,7 @@ export default function GradePage() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg opacity-80 max-w-2xl"
+            className="text-sm opacity-80 max-w-7xl"
           >
             {grade.description}
           </motion.p>
@@ -65,20 +66,24 @@ export default function GradePage() {
           <Tabs defaultValue="labs" className="space-y-8">
             <TabsList className="flex flex-wrap gap-1">
               <TabsTrigger value="labs" className="gap-1.5">
-                <FileText className="h-4 w-4" /> Lab Materials
+                <FileText className="h-4 w-4" /> Lab and Class Materials
               </TabsTrigger>
-              <TabsTrigger value="slides" className="gap-1.5">
-                <Presentation className="h-4 w-4" /> Slides
+	     {/* 
+	      <TabsTrigger value="slides" className="gap-1.5">
+                <Presentation className="h-4 w-4" /> Workshops
               </TabsTrigger>
+	     */}
               <TabsTrigger value="videos" className="gap-1.5">
-                <Video className="h-4 w-4" /> Videos
+                <Video className="h-4 w-4" /> Video Tutorials
               </TabsTrigger>
               <TabsTrigger value="photos" className="gap-1.5">
                 <Image className="h-4 w-4" /> Photos
               </TabsTrigger>
-              <TabsTrigger value="events" className="gap-1.5">
+	      {/*
+	      <TabsTrigger value="events" className="gap-1.5">
                 <Calendar className="h-4 w-4" /> Events
               </TabsTrigger>
+	     */}
             </TabsList>
 
             {/* Lab Materials */}
@@ -107,10 +112,10 @@ export default function GradePage() {
               )}
             </TabsContent>
 
-            {/* Slides */}
+            {/* Workshops */}
             <TabsContent value="slides">
               {grade.slides.length === 0 ? (
-                <EmptyState label="slides" />
+                <EmptyState label="workshops" />
               ) : (
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {grade.slides.map((s, i) => (
@@ -165,16 +170,7 @@ export default function GradePage() {
               {grade.photos.length === 0 ? (
                 <EmptyState label="photos" />
               ) : (
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {grade.photos.map((p, i) => (
-                    <div key={i} className="rounded-lg border bg-card overflow-hidden">
-                      <img src={p.src} alt={p.alt} className="w-full aspect-video object-cover" />
-                      {p.caption && (
-                        <p className="p-3 text-sm text-muted-foreground">{p.caption}</p>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                <PhotoGallery photos={grade.photos} />
               )}
             </TabsContent>
 

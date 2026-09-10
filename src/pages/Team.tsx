@@ -12,7 +12,6 @@ import { ArrowUpRight, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const categoryOrder: TeamCategory[] = [
-  "leadership",
   "core",
   "contributing",
   "scientific-mentor",
@@ -42,7 +41,7 @@ function TeamMemberCard({
         onClick={() => isClickable && onSelect(member)}
         disabled={!isClickable}
         className={cn(
-          "flex h-full min-h-[280px] w-full flex-col items-center rounded-xl border border-border/60 bg-card p-5 text-center shadow-sm transition-all",
+          "flex h-full w-full min-h-[300px] flex-col items-center rounded-xl border border-border/60 bg-card p-5 text-center shadow-sm transition-all",
           isClickable && "hover:border-primary/30 hover:bg-muted/30 hover:shadow-md cursor-pointer group",
           !isClickable && "cursor-default opacity-90",
         )}
@@ -51,11 +50,11 @@ function TeamMemberCard({
           <img
             src={member.photo}
             alt={member.name}
-            className="mb-4 h-24 w-24 shrink-0 rounded-full object-cover ring-2 ring-primary/15"
+            className="mb-4 h-36 w-36 shrink-0 rounded-full object-cover ring-2 ring-primary/15 md:h-40 md:w-40"
           />
         ) : (
-          <div className="mb-4 flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-muted ring-2 ring-primary/15">
-            <Users className="h-10 w-10 text-muted-foreground/40" />
+          <div className="mb-4 flex h-36 w-36 shrink-0 items-center justify-center rounded-full bg-muted ring-2 ring-primary/15 md:h-40 md:w-40">
+            <Users className="h-14 w-14 text-muted-foreground/40" />
           </div>
         )}
 
@@ -68,6 +67,9 @@ function TeamMemberCard({
           )}
           <p className="mt-2 line-clamp-5 w-full text-sm leading-relaxed text-primary/90">
             {member.designation}
+          </p>
+          <p className="mt-2 line-clamp-5 w-full text-sm leading-relaxed text-primary/90">
+            {member.designation2}
           </p>
         </div>
 
@@ -113,6 +115,7 @@ function TeamMemberModal({
             <p className="text-sm text-muted-foreground">({member.pronouns})</p>
           )}
           <p className="text-sm font-medium text-primary">{member.designation}</p>
+          <p className="text-sm font-medium text-primary">{member.designation2}</p>
         </DialogHeader>
         {member.bio && (
           <DialogDescription asChild>
@@ -130,16 +133,16 @@ export default function Team() {
 
   return (
     <>
-      <section className="page-hero py-16">
+      <section className="page-header py-5">
         <div className="container text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display text-3xl md:text-5xl font-bold mb-3"
+            className="font-display text-xl md:text-3xl font-bold mb-2"
           >
             Our Team
           </motion.h1>
-          <p className="opacity-80 max-w-xl mx-auto">
+          <p className="opacity-100 max-w-xl mx-auto">
             Meet the scientists, educators, and researchers behind {siteContent.schoolName}.
           </p>
         </div>

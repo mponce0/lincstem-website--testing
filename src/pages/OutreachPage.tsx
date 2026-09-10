@@ -1,8 +1,165 @@
 import { useParams, Link } from "react-router-dom";
-import { siteContent } from "@/data/content";
+import {
+  siteContent,
+  type OutreachCollaboration,
+  type OutreachLink,
+} from "@/data/content";
+import TimelineSection from "@/components/TimelineSection";
 import { motion } from "framer-motion";
-import { ArrowLeft, HandHeart } from "lucide-react";
+import { ArrowLeft, ExternalLink, ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import PhotoCarousel from "@/components/PhotoCarousel";
+import { cn } from "@/lib/utils";
+
+function PhotoPanel({ photos }: { photos: OutreachCollaboration["photos"] }) {
+  if (photos && photos.length > 0) {
+    return (
+      <PhotoCarousel
+        photos={photos}
+        controls="overlay"
+        aspect="aspect-[4/3]"
+        className="max-w-none"
+      />
+    );
+  }
+
+  return (
+    <div
+      className="flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-border/60 bg-muted/50 px-6 text-center shadow-sm"
+      aria-hidden="true"
+    >
+      <ImageIcon className="h-10 w-10 text-muted-foreground/40" />
+      <span className="text-sm text-muted-foreground/60">Photos coming soon</span>
+    </div>
+  );
+}
+
+function OutreachCollaborationRow({
+  collaboration,
+  index,
+}: {
+  collaboration: OutreachCollaboration;
+  index: number;
+}) {
+  const imageOnLeft = index % 2 === 1;
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.06 }}
+      className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center"
+    >
+      <div className={cn(imageOnLeft && "lg:order-2")}>
+        {collaboration.subtitle && (
+          <span className="inline-block text-xs uppercase tracking-widest text-primary font-medium mb-1">
+            {collaboration.subtitle}
+          </span>
+        )}
+        <h2 className="font-display text-xl md:text-2xl font-bold leading-snug mb-4">
+          {collaboration.title}
+        </h2>
+        {collaboration.paragraphs.length > 0 && (
+          <div className="space-y-4 text-muted-foreground leading-relaxed">
+            {collaboration.paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+            ))}
+          </div>
+        )}
+        {collaboration.presenter && (
+          <p className="text-sm text-muted-foreground mt-4">
+            <span className="font-medium text-foreground">Presenter:</span> {collaboration.presenter}
+          </p>
+        )}
+        {collaboration.url && (
+          <a
+            href={collaboration.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-secondary hover:gap-2 transition-all"
+          >
+            View event details
+            <ExternalLink className="h-4 w-4" aria-hidden="true" />
+          </a>
+        )}
+      </div>
+
+      <div className={cn(imageOnLeft && "lg:order-1")}>
+        <PhotoPanel photos={collaboration.photos} />
+      </div>
+    </motion.article>
+  );
+}
+
+function OutreachLinkRow({ link, index }: { link: OutreachLink; index: number }) {
+  const imageOnLeft = index % 2 === 1;
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.06 }}
+      className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center"
+    >
+      <div className={cn(imageOnLeft && "lg:order-2")}>
+        <h2 className="font-display text-xl md:text-2xl font-bold leading-snug mb-3">
+          {link.title}
+        </h2>
+        {link.subtitle && (
+          <p className="text-muted-foreground leading-relaxed mb-3 italic">{link.subtitle}</p>
+        )}
+        <p
+          className={cn(
+            "text-muted-foreground leading-relaxed",
+            link.presenter ? "mb-3" : "mb-5",
+          )}
+        >
+          {link.description}
+        </p>
+        {link.presenter && (
+          <p className="text-sm text-muted-foreground mb-5">
+            <span className="font-medium text-foreground">Presenter:</span> {link.presenter}
+          </p>
+        )}
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-secondary hover:gap-2 transition-all"
+        >
+          View event details
+          <ExternalLink className="h-4 w-4" aria-hidden="true" />
+        </a>
+      </div>
+
+      <div
+        className={cn(
+          "overflow-hidden rounded-xl border border-border/60 bg-card shadow-sm",
+          imageOnLeft && "lg:order-1",
+        )}
+      >
+        {link.image ? (
+          <img
+            src={link.image}
+            alt={link.imageAlt ?? link.title}
+            className="aspect-[4/3] w-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div
+            className="flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 bg-muted/50 px-6 text-center"
+            aria-hidden="true"
+          >
+            <ImageIcon className="h-10 w-10 text-muted-foreground/40" />
+            <span className="text-sm text-muted-foreground/60">Image coming soon</span>
+          </div>
+        )}
+      </div>
+    </motion.article>
+  );
+}
 
 export default function OutreachPage() {
   const { outreachId } = useParams();
@@ -13,38 +170,70 @@ export default function OutreachPage() {
       <div className="container py-20 text-center">
         <h1 className="font-display text-3xl font-bold mb-4">Outreach Category Not Found</h1>
         <Button asChild variant="outline">
-          <Link to="/community-outreach">Back to Community Outreach</Link>
+          <Link to="/community-outreach">Back to Research and Engagement</Link>
         </Button>
       </div>
     );
   }
 
+  const hasContent =
+    (category.timeline && category.timeline.length > 0) ||
+    (category.collaborations && category.collaborations.length > 0) ||
+    (category.links && category.links.length > 0);
+
   return (
     <>
-      <section className="page-hero py-16">
+      <section className="page-header py-5">
         <div className="container">
           <Link
             to="/community-outreach"
             className="inline-flex items-center text-sm opacity-70 hover:opacity-100 mb-4 transition-opacity"
           >
-            <ArrowLeft className="mr-1 h-4 w-4" /> Community Outreach
+            <ArrowLeft className="mr-1 h-4 w-4" /> Research and Engagement
           </Link>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display text-3xl md:text-5xl font-bold mb-3"
+            className="font-display text-xl md:text-3xl font-bold mb-3"
           >
             {category.title}
           </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-sm opacity-80 max-w-7xl"
+          >
+            {category.description}
+          </motion.p>
         </div>
       </section>
 
-      <section className="flex-1 section-pale py-20">
-        <div className="container max-w-2xl text-center">
-          <HandHeart className="mx-auto h-12 w-12 text-primary mb-6 opacity-60" />
-          <p className="text-muted-foreground leading-relaxed">{category.description}</p>
-        </div>
-      </section>
+      {category.timeline && category.timeline.length > 0 && (
+        <TimelineSection title={category.title} entries={category.timeline} showHeader={false} />
+      )}
+
+      {((category.collaborations && category.collaborations.length > 0) ||
+        (category.links && category.links.length > 0)) && (
+        <section className="py-20 section-pale">
+          <div className="container max-w-6xl space-y-16 md:space-y-20">
+            {category.collaborations?.map((collaboration, i) => (
+              <OutreachCollaborationRow
+                key={collaboration.title}
+                collaboration={collaboration}
+                index={i}
+              />
+            ))}
+            {category.links?.map((link, i) => (
+              <OutreachLinkRow
+                key={link.url}
+                link={link}
+                index={(category.collaborations?.length ?? 0) + i}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }

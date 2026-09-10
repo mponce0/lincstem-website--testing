@@ -7,16 +7,16 @@ export default function Contact() {
 
   return (
     <>
-      <section className="page-hero py-16">
+      <section className="page-header py-5">
         <div className="container text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display text-3xl md:text-5xl font-bold mb-3"
+            className="font-display text-xl md:text-3xl font-bold mb-2"
           >
             Contact Us
           </motion.h1>
-          <p className="opacity-90 max-w-2xl mx-auto leading-relaxed">{collaborationMessage}</p>
+          <p className="opacity-100 max-w-2xl mx-auto leading-relaxed">{collaborationMessage}</p>
         </div>
       </section>
 
