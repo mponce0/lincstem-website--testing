@@ -4,6 +4,9 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
+  base: "/lincstem-website--testing/",
+  assetsInclude: ["**/*.JPG"],
+
   server: {
     port: 5173,
   },
