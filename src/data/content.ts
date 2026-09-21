@@ -26,7 +26,7 @@ import thiagoPhoto from "@/assets/team/Thiago.jpg";
 import zaheerPhoto from "@/assets/team/Zaheer_photo.jpeg";
 import nicolePhoto from "@/assets/team/NicoleA_photo.jpg";
 import isaiahPhoto from "@/assets/team/Isaiah_photo.jpg";
-import basithPhoto from "@/assets/team/Basith_photo.jpg";
+import basithPhoto from "@/assets/team/Basith_photo.jpeg";
 import legacyTeamPhoto from "@/assets/team/Legacy_Team.jpeg";
 
 import ediConversation from "@/assets/homepage/edi-conversation.jpg";
