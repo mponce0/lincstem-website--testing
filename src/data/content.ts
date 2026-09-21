@@ -789,7 +789,7 @@ export const siteContent: SiteContent = {
       photo: isaiahPhoto,
     },
     {
-      name: "MSc. Jenna Lott",
+      name: "MA. Jenna Lott",
       designation: "PhD Student, OISE, UTSG",
       pronouns: "she/her",
       category: "scientific-mentor",
@@ -804,7 +804,7 @@ export const siteContent: SiteContent = {
     },
     {
       name: "BSc. Megan Ali",
-      designation: "MSc Student, OISE, UTSG",
+      designation: "MEd Student, OISE, UTSG",
       pronouns: "she/her",
       category: "scientific-mentor",
       photo: meganAli,
