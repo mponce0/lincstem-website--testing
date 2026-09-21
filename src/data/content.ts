@@ -26,6 +26,7 @@ import thiagoPhoto from "@/assets/team/Thiago.jpg";
 import zaheerPhoto from "@/assets/team/Zaheer_photo.jpeg";
 import nicolePhoto from "@/assets/team/NicoleA_photo.jpg";
 import isaiahPhoto from "@/assets/team/Isaiah_photo.jpg";
+import basithPhoto from "@/assets/team/Basith_photo.jpg";
 import legacyTeamPhoto from "@/assets/team/Legacy_Team.jpeg";
 
 import ediConversation from "@/assets/homepage/edi-conversation.jpg";
@@ -829,6 +830,13 @@ export const siteContent: SiteContent = {
       pronouns: "he/him",
       category: "former-scientific-mentor",
       photo: susheenMahmoodPhoto,
+    },
+    {
+      name: "Basith Nizwan",
+      designation: "BSc. in Biology, UTSC",
+      pronouns: "he/him",
+      category: "scientific-mentor",
+      photo: basithPhoto,
     },
   ],
   grades: [
